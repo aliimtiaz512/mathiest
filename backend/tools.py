@@ -22,7 +22,8 @@ def add_numbers(numbers:list[int]):
     """
     print(">>> AGENT IS USING: add_numbers")
     try:
-        return sum(numbers)
+        total=sum(numbers)
+        return total
     except Exception as e:
         return f"Error: {e}"
     
@@ -33,7 +34,8 @@ def multiple_numbers(numbers:list[int]):
     """
     print(">>> AGENT IS USING: multiple_numbers")
     try:
-        return math.prod(numbers)
+        total=math.prod(numbers)
+        return total
     except Exception as e:
         return f"Error: {e}"
     
@@ -45,7 +47,8 @@ def divide_numbers(divident:int,divisor=int):
         if divisor==0:
             return "This is not possible in mathematics."
         else:
-            return divident/divisor
+            total=divident/divisor
+            return total
     except Exception as e:
         return f"Error: {e}"
     
@@ -67,7 +70,8 @@ def whole_square_formula_add(a:int, b:int):
     """Use for (a+b)^2"""
     print(">>> AGENT IS USING: whole_square_formula_add")
     try:
-        return a+b+2*a*b
+        total=a+b+2*a*b
+        return total
     except Exception as e:
         return f"Error {e}"
 
@@ -76,8 +80,8 @@ def whole_square_formula_subtract(a:int, b:int):
     """Use for (a-b)^2"""
     print(">>> AGENT IS USING: whole_square_formula_subtract")
     try:
-
-        return a+b-2*a*b
+        total=a+b-2*a*b
+        return total
     except Exception as e:
         return f"Error {e}"
 
@@ -86,7 +90,8 @@ def difference_square_two_numbers(a:int, b:int):
    """Use for (a^2-b^2)"""
    print(">>> AGENT IS USING: difference_square_two_numbers")
    try:
-       return (a+b)*(a-b)
+       total=(a+b)*(a-b)
+       return total
    except Exception as e:
         return f"Error {e}"
      
