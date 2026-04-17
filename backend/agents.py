@@ -2,33 +2,25 @@ import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent 
-from langchain_core.tools import Tool
+from langchain_core.tools import tool
 from langchain_core.messages import SystemMessage
-from sympy import sympify
+from tools import math_solver_logic,add_numbers,multiple_numbers,divide_numbers,square_of_numbers,whole_square_formula_add,whole_square_formula_subtract,difference_square_two_numbers
 
 load_dotenv()
 
-# 1. Define Tool Logic
-def math_solver_logic(query: str):
-    try:
-        result = sympify(query)
-        return str(result)
-    except Exception as e:
-        return f"Error: {e}"
 
-math_tool = Tool(
-    name="Math_Calculator",
-    func=math_solver_logic,
-    description="Solve complex math, algebra, and calculus equations."
-)
+math_tools=[math_solver_logic,add_numbers,multiple_numbers,divide_numbers,square_of_numbers,whole_square_formula_add,whole_square_formula_subtract,difference_square_two_numbers]
+
 
 # 2. Define the System Prompt (Your "Brain" Instructions)
 SYSTEM_PROMPT = """You are 'Mathiest', a specialized AI math assistant. 
-Your goal is to provide 100% accurate mathematical solutions.
-When a user asks a math question:
-1. Use the Math_Calculator tool for any calculation or simplification.
-2. Explain your steps clearly using LaTeX formatting.
-3. If the tool returns an error, double-check the syntax and try again."""
+### TOOL HIERARCHY RULES:
+1. **Priority 1 (Simple Math):** If the user asks for basic addition, subtraction, multiplication, or division, ALWAYS use the specific atomic tools (e.g., add_numbers, divide_numbers).
+2. **Priority 2 (Algebraic Identities):** For whole squares or difference of squares, use the specific formula tools you have.
+3. **Priority 3 (The Safety Net):** ONLY use 'math_solver_logic' (SymPy) if the problem involves variables (x, y), calculus, or complex symbolic simplification that the other tools cannot handle.
+### RESPONSE STYLE:
+- Explain your steps clearly using LaTeX formatting.
+- If a tool returns an error, try an alternative tool or check your syntax."""
 
 # 3. Initialize the Agent
 llm = ChatOpenAI(model="gpt-4-turbo", temperature=0)
@@ -36,7 +28,7 @@ llm = ChatOpenAI(model="gpt-4-turbo", temperature=0)
 # We pass the prompt directly as a string or SystemMessage
 agent_executor = create_agent(
     model=llm, 
-    tools=[math_tool],
+    tools=math_tools,
     system_prompt=SYSTEM_PROMPT
 )
 
