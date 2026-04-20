@@ -11,7 +11,7 @@ def math_solver_logic(query: str):
     print(">>> AGENT IS USING: math_solver_logic")
     try:
         result = sympify(query)
-        return str(result)
+        return f"The result of the problem is {str(result)}"
     except Exception as e:
         return f"Error: {e}"
     
@@ -23,7 +23,7 @@ def add_numbers(numbers:list[int]):
     print(">>> AGENT IS USING: add_numbers")
     try:
         total=sum(numbers)
-        return total
+        return f"The result of the problem is {total}"
     except Exception as e:
         return f"Error: {e}"
     
@@ -35,7 +35,7 @@ def multiple_numbers(numbers:list[int]):
     print(">>> AGENT IS USING: multiple_numbers")
     try:
         total=math.prod(numbers)
-        return total
+        f"The result of the problem is {total}"
     except Exception as e:
         return f"Error: {e}"
     
@@ -48,7 +48,7 @@ def divide_numbers(divident:int,divisor=int):
             return "This is not possible in mathematics."
         else:
             total=divident/divisor
-            return total
+            f"The result of the problem is {total}"
     except Exception as e:
         return f"Error: {e}"
     
@@ -61,7 +61,7 @@ def square_of_numbers(numbers:list[int]):
         for i in range(len(numbers-1)):
             result=i*i
             square.append(result)
-        return square
+        return f"The result of the problem is {square}"
     except Exception as e:
         return f"Error {e}"
     
@@ -71,7 +71,7 @@ def whole_square_formula_add(a:int, b:int):
     print(">>> AGENT IS USING: whole_square_formula_add")
     try:
         total=a+b+2*a*b
-        return total
+        return f"The result of the problem is {total}"
     except Exception as e:
         return f"Error {e}"
 
@@ -81,7 +81,7 @@ def whole_square_formula_subtract(a:int, b:int):
     print(">>> AGENT IS USING: whole_square_formula_subtract")
     try:
         total=a+b-2*a*b
-        return total
+        return f"The result of the problem is {total}"
     except Exception as e:
         return f"Error {e}"
 
@@ -91,7 +91,7 @@ def difference_square_two_numbers(a:int, b:int):
    print(">>> AGENT IS USING: difference_square_two_numbers")
    try:
        total=(a+b)*(a-b)
-       return total
+       return f"The result of the problem is {str(total)}"
    except Exception as e:
         return f"Error {e}"
      
