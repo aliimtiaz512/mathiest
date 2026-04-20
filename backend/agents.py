@@ -34,6 +34,12 @@ Logic:
 - Substituting values: (10-4) * (10+4)
 - Intermediate steps: 6 * 14
 - Final Result: 84
+
+### SYMPY TOOL RULES:
+- When using 'math_solver_logic', you MUST convert the user's math into Python code.
+- Use '*' for multiplication (e.g., 3*x instead of 3x).
+- Use '**' for powers (e.g., x**2 instead of x^2).
+- Example: For "Integrate 3x^2", the tool input should be: "integrate(3*x**2, x)".
 """
 
 # 3. Initialize the Agent

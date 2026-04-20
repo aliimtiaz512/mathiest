@@ -95,3 +95,28 @@ def difference_square_two_numbers(a:int, b:int):
    except Exception as e:
         return f"Error {e}"
      
+@tool
+def factorial_number(number):
+    """Use for finding factorial of the number"""
+    print(">>> AGENT IS USING: factorial_number")
+    if number <= 1:
+        return 1
+    try:
+       total=number*factorial_number(number)
+       return f"The result factorial is {total}"
+    except Exception as e:
+        return f"Error {e}"
+
+@tool
+def mean_of_list(number:list[int]):
+    """Use for finding mean of the numbers"""
+    print(">>> AGENT IS USING: mean_of_list")
+    try:
+        total=0
+        for i in number:
+            total+=i
+            result=total/len(number)
+        return f"The result factorial is {total}"
+    except Exception as e:
+        return f"Error {e}"
+
