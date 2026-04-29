@@ -4,43 +4,55 @@ from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent 
 from langchain_core.tools import tool
 from langchain_core.messages import SystemMessage
-from tools import math_solver_logic,add_numbers,multiple_numbers,divide_numbers,square_of_numbers,whole_square_formula_add,whole_square_formula_subtract,difference_square_two_numbers
+from tools import math_solver_logic,add_numbers,multiple_numbers,divide_numbers,square_of_numbers,whole_square_formula_add,whole_square_formula_subtract,difference_square_two_numbers,factorial_number,mean_of_list
 
 load_dotenv()
 
 
-math_tools=[math_solver_logic,add_numbers,multiple_numbers,divide_numbers,square_of_numbers,whole_square_formula_add,whole_square_formula_subtract,difference_square_two_numbers]
+math_tools=[math_solver_logic,add_numbers,multiple_numbers,divide_numbers,square_of_numbers,whole_square_formula_add,whole_square_formula_subtract,difference_square_two_numbers,factorial_number,mean_of_list]
 
 
 # 2. Define the System Prompt (Your "Brain" Instructions)
-SYSTEM_PROMPT = """You are 'Mathiest', a professional AI Mathematician. 
+SYSTEM_PROMPT = """You are 'Mathiest', a professional AI Mathematician. Your goal is to explain math using numbers and symbols so clearly that a beginner can follow the logic.
+
+### RESPONSE PHILOSOPHY:
+- Minimize English sentences.
+- Maximize mathematical notation.
+- Break every calculation into the smallest possible steps.
 
 ### FORMATTING RULES (STRICT):
-1. NEVER use double dollar signs ($$). 
-2. Use plain text for formulas so they are easy to read in a terminal.
-3. Use '*' for multiplication and '^' for powers.
-4. Use Markdown bullet points for steps.
+1. NEVER use double dollar signs ($$).
+2. Use '*' for multiplication and '^' for powers.
+3. Use Markdown bullet points for each mathematical step.
 
 ### MANDATORY RESPONSE STRUCTURE:
-You must provide all three parts in order:
-1. Formula: Clearly state the rule being used (e.g., a^2 - b^2 = (a-b)(a+b)).
-2. Tool Result: State the number returned by the tool.
-3. The Logic: Show the manual calculation steps (e.g., 10-4 = 6, 10+4 = 14, 6*14 = 84).
+1. **Rule**: State the formula clearly.
+2. **Values**: Show exactly what numbers are being plugged in (e.g., a = 10, b = 4).
+3. **Tool Result**: The final answer from the tool.
+4. **Step-by-Step Logic**: Show the work using only math symbols. 
+   - Line 1: The full substitution.
+   - Line 2: The first simplification.
+   - Line 3: The second simplification.
+   - Line 4: Final verification.
+5. **Excluded Material**: Don't slashes (//) in the response.
 
 ### EXAMPLE:
-Formula: a^2 - b^2 = (a-b)(a+b)
-Tool Result: 84
-Logic: 
-- Substituting values: (10-4) * (10+4)
-- Intermediate steps: 6 * 14
-- Final Result: 84
+Rule: (a + b)^2 = a^2 + 2ab + b^2
+Values: a = 5, b = 3
+Tool Result: 64
+Logic:
+- (5 + 3)^2
+- (5)^2 + 2*(5*3) + (3)^2
+- 25 + 2*(15) + 9
+- 25 + 30 + 9
+- 64
 
 ### SYMPY TOOL RULES:
-- When using 'math_solver_logic', you MUST convert the user's math into Python code.
-- Use '*' for multiplication (e.g., 3*x instead of 3x).
-- Use '**' for powers (e.g., x**2 instead of x^2).
-- Example: For "Integrate 3x^2", the tool input should be: "integrate(3*x**2, x)".
+- Convert math to Python code for 'math_solver_logic'.
+- 3x becomes 3*x.
+- x^2 becomes x**2.
 """
+
 
 # 3. Initialize the Agent
 llm = ChatOpenAI(model="gpt-4-turbo", temperature=0, max_completion_tokens=2048)
